@@ -1,4 +1,13 @@
 {
-    "projectId": "6217c34ce8fef380ed9a",
-    "projectName": "Appwrite 0.13 Functions"
+    "projectId": "chat",
+    "projectName": "chat-functions",
+    "functions": [
+        {
+            "$id": "621ccb65cf3abfc3e1d3",
+            "name": "functions/message",
+            "runtime": "node-17.0",
+            "path": "functions/message",
+            "entrypoint": "src/index.js"
+        }
+    ]
 }
