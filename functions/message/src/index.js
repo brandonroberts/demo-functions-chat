@@ -42,5 +42,6 @@ module.exports = async function (req, res) {
 
   res.json({
     areDevelopersAwesome: true,
+    eventData: req.env['APPWRITE_FUNCTION_EVENT_DATA']
   });
 };
