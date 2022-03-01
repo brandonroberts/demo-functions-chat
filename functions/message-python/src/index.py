@@ -8,8 +8,6 @@ from appwrite.exception import AppwriteException
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-from nltk.ccg import chart, lexicon
-
 # Initialize sentiment intensity analyzer
 sid = SentimentIntensityAnalyzer()
 
@@ -68,12 +66,11 @@ def main(req, res):
     else:
         (
             client
-                .set_endpoint('https://bradley-qa2.appwrite.org/v1')
+                .set_endpoint(req.env.get('APPWRITE_FUNCTION_ENDPOINT'))
                 .set_project(req.env.get('APPWRITE_FUNCTION_PROJECT_ID'))
                 .set_key(req.env.get('APPWRITE_FUNCTION_API_KEY'))
                 .set_self_signed(True)
         )
-
 
     data = json.loads(req.env.get('APPWRITE_FUNCTION_EVENT_DATA'))
     collection_id = data["$collection"]
@@ -92,13 +89,8 @@ def main(req, res):
         "meme": fetch_gif(parsed_message)
     }
 
-    ep=req.env.get('APPWRITE_FUNCTION_ENDPOINT')
-
-    print(collection_id, document_id, document, data["$read"], data["$write"])
     try:
         database.update_document(collection_id, document_id, document, data["$read"], data["$write"])
         return res.send('successfully sent message')
     except AppwriteException as e:
         return res.send(f'Unable to update meme for message {e}')
-
-
